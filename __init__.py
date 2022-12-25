@@ -1,0 +1,1 @@
+"""The link2home integration."""
