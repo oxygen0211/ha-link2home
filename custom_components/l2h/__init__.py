@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import logging
+from .coordinator import L2HUpdateCoordinator, L2HEntity
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
@@ -23,5 +24,7 @@ async def async_setup_entry(
 
     hass.data.setdefault(DOMAIN, {})
     # hass.data[DOMAIN][entry.entry_id] = MyApi(...)
-    hass.config_entries.async_setup_platforms(config_entry, PLATFORMS)
+    await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
+
+    _LOGGER.info("L2h platform setup completed")
     return True

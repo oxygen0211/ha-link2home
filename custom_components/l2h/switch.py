@@ -21,12 +21,13 @@ async def async_setup_entry(
     """Set up link2home from a config entry."""
 
     hass.data.setdefault(DOMAIN, {})
-
+    
     @callback
     def entity_callback(idx):
         _LOGGER.info("Adding entity with ID %s", idx)
         async_add_entities([L2HEntity(coordinator, idx)])
 
+    _LOGGER.info("Starting to scan for L2H devices... Change a setting to make them show up")
     coordinator = L2HUpdateCoordinator(hass, entity_callback)
     hass.data[DOMAIN][config_entry.entry_id] = coordinator
 

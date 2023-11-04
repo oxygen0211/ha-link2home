@@ -15,7 +15,7 @@ from homeassistant.helpers.update_coordinator import (
 from .const import DOMAIN, MANUFACTURER
 
 _LOGGER = logging.getLogger(__name__)
-
+l2h_server = UDPServer()
 
 class L2HUpdateCoordinator(DataUpdateCoordinator):
     """My custom coordinator."""
@@ -29,7 +29,6 @@ class L2HUpdateCoordinator(DataUpdateCoordinator):
             name="Link2Home",
         )
         self.hass.states.async_set("l2h.test", "Initialized")
-        self.l2h_server = UDPServer()
         self.entity_callback = entity_callback
         _LOGGER.info("Coordinator initialized")
 
@@ -61,12 +60,12 @@ class L2HUpdateCoordinator(DataUpdateCoordinator):
     def listen(self):
         """Start listening for UDP broadcastes status Updates with Lin2Home generic protocol."""
         _LOGGER.info("Starting UDP Listener")
-        self.l2h_server.listen(self.status_callback)
+        l2h_server.listen(self.status_callback)
 
     def set_state(self, idx, new_state):
         """Set status (on/off) of a given Entity."""
         device = self.data[idx]
-        self.l2h_server.setStatus(device["ip"], 1, new_state)
+        l2h_server.setStatus(device["ip"], 1, new_state)
 
 
 class L2HEntity(CoordinatorEntity, SwitchEntity):
