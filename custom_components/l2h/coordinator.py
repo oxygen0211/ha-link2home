@@ -100,7 +100,7 @@ class L2HEntity(CoordinatorEntity, SwitchEntity):
     def _handle_coordinator_update(self) -> None:
         """Handle updated data from the coordinator."""
         self._attr_is_on = self.coordinator.data[self.idx]["state"]
-        self.async_schedule_update_ha_state()
+        self.schedule_update_ha_state()
 
     async def async_turn_on(self, **kwargs):
         """Turn the light on.
