@@ -30,6 +30,7 @@ class L2HUpdateCoordinator(DataUpdateCoordinator):
         )
         self.hass.states.async_set("l2h.test", "Initialized")
         self.entity_callback = entity_callback
+        _LOGGER.info("Current config: %s", self.data)
         _LOGGER.info("Coordinator initialized")
 
     @callback
