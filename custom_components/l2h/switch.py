@@ -29,6 +29,7 @@ async def async_setup_entry(
 
     _LOGGER.info("Starting to scan for L2H devices... Change a setting to make them show up")
     coordinator = L2HUpdateCoordinator(hass, entity_callback)
+    _LOGGER.info("Current config %s", hass.data[DOMAIN])
     hass.data[DOMAIN][config_entry.entry_id] = coordinator
 
     hass.loop.run_in_executor(None, coordinator.listen)
